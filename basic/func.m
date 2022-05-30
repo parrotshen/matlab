@@ -14,3 +14,5 @@ function [x, y] = func(a, b, c, d)
 
 x = a+b;
 y = c*d;
+
+end

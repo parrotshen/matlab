@@ -16,3 +16,5 @@ while num ~= 1
 end
 data
 plot(data);
+
+end
