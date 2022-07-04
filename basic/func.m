@@ -1,5 +1,5 @@
-% func.m - function example.
-% function [x, y] = func(a, b, c, d)
+% Function example.
+% [x, y] = func(a, b, c, d)
 %
 % Input:
 %   a = 1st argument

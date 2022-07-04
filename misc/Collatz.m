@@ -1,5 +1,5 @@
-% Collatz.m - Collatz conjecture, the 3n+1 problem.
-% function [step] = Collatz(num)
+% Collatz conjecture, the 3n+1 problem.
+% [step] = Collatz(num)
 %
 function [step] = Collatz(num)
 

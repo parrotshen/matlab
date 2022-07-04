@@ -1,5 +1,5 @@
-% HZ.m - Generate sound by the specific frequency (Hz).
-% function HZ(freq)
+% Generate sound by the specific frequency (Hz).
+% HZ(freq)
 %
 function HZ(freq)
 

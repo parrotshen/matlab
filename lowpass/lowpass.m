@@ -1,7 +1,8 @@
-% https://www.keil.com/pack/doc/CMSIS/DSP/html/group__FIRLPF.html
 clc;
 clear;
 close all;
+
+txtFlag = 0;
 
 %
 %    W = 2*pi*F
@@ -17,17 +18,21 @@ t = 0:dt:(N-1)*dt; % timeline
 disp(['sampling frequency: ',num2str(fs),' Hz']);
 disp(['timeline: ',num2str(N*dt),' sec']);
 disp([num2str(N),' points']);
+disp(' ');
 
 
-A1 = 1;            % sine wave amplitude
-P1 = 0;            % sine wave phase
-F1 = 1000;         % sine wave frequency (Hz) 
+A1 = 1;            % Sine wave A: amplitude
+P1 = 0;            % Sine wave A: phase
+F1 = 1000;         % Sine wave A: frequency (Hz) 
 waveA = A1*cos(2*pi*F1*t + P1);
 
-A2 = 0.5;          % amplitude
-P2 = 0;            % sine wave phase
-F2 = 15000;        % sine wave frequency (hertz) 
+A2 = 0.5;          % Sine wave B: amplitude
+P2 = 0;            % Sine wave B: phase
+F2 = 15000;        % Sine wave B: frequency (hertz) 
 waveB = A2*cos(2*pi*F2*t + P2);
+
+disp(['wave A: ',num2str(F1),'Hz, ',num2str(N*dt*F1),' cycles']);
+disp(['wave B: ',num2str(F2),'Hz, ',num2str(N*dt*F2),' cycles']);
 
 
 % sine wave A, B, A+B
@@ -42,9 +47,11 @@ ylabel('Amplitude');
 legend(['A:',num2str(F1),'Hz'],['B:',num2str(F2),'Hz']);
 
 waveAB = waveA + waveB;
-%fid = fopen('waveAB.txt', 'w');
-%fprintf(fid, '%f\n', waveAB);
-%fclose(fid);
+if ( txtFlag )
+    fid = fopen('waveAB.txt', 'w');
+    fprintf(fid, '%f\n', waveAB);
+    fclose(fid);
+end
 
 figure;
 plot(t, waveAB);
@@ -62,9 +69,11 @@ ylabel('Amplitude');
 %
 dftAB = fft(waveAB);
 dftAB_shift = fftshift(dftAB);
-%fid = fopen('dftAB_abs.txt', 'w');
-%fprintf(fid, '%f\n', abs(dftAB));
-%fclose(fid);
+if ( txtFlag )
+    fid = fopen('dftAB_abs.txt', 'w');
+    fprintf(fid, '%f\n', abs(dftAB));
+    fclose(fid);
+end
 
 % FFT (-fs/2 ~ fs/2)
 f = fs*[-N/2:N/2-1]/N;
@@ -87,9 +96,11 @@ ylabel('|DFT value|');
 
 % low pass filter
 coeff = fir1(28, 6/24);
-%fid = fopen('coeff.txt', 'w');
-%fprintf(fid, '%f\n', coeff);
-%fclose(fid);
+if ( txtFlag )
+    fid = fopen('coeff.txt', 'w');
+    fprintf(fid, '%f\n', coeff);
+    fclose(fid);
+end
 
 figure;
 stem(coeff);
@@ -106,9 +117,11 @@ ylabel('Magnitude');
 
 
 waveAB_filter = conv(coeff, waveAB);
-%fid = fopen('waveAB_filter.txt', 'w');
-%fprintf(fid, '%f\n', waveAB_filter(1:N));
-%fclose(fid);
+if ( txtFlag )
+    fid = fopen('waveAB_filter.txt', 'w');
+    fprintf(fid, '%f\n', waveAB_filter(1:N));
+    fclose(fid);
+end
 
 figure;
 plot(t, waveAB_filter(1:N));
